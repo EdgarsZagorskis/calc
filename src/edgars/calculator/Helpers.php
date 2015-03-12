@@ -3,10 +3,10 @@
 namespace Edgars\Calculator;
 
 /**
- * Class CalculatorHelpers
+ * Class Helpers
  * @package Edgars\Calculator
  */
-class CalculatorHelpers
+class Helpers
 {
     /**
      * @var array
@@ -25,7 +25,7 @@ class CalculatorHelpers
     /**
      * @param $expression
      * @return array
-     * @throws CalculatorException
+     * @throws Exception
      */
     public static function split($expression)
     {
@@ -55,12 +55,12 @@ class CalculatorHelpers
     /**
      * There must be at least 3 splits and it should be odd number
      * @param array $splits
-     * @throws CalculatorException
+     * @throws Exception
      */
     private static function checkSplitHealth(array $splits)
     {
         if (count($splits) < 3 || count($splits) % 2 == 0) {
-            throw new CalculatorException('String is not a valid expression');
+            throw new Exception('String is not a valid expression');
         }
     }
 

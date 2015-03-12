@@ -20,8 +20,8 @@ class Calculator implements CalculatorInterface
      */
     public function run($expression)
     {
-        $expression = CalculatorHelpers::cleanUp($expression);
-        $this->setArrExpression(CalculatorHelpers::split($expression));
+        $expression = Helpers::cleanUp($expression);
+        $this->setArrExpression(Helpers::split($expression));
         $this->processSplits(array('*', '/'));
         $this->processSplits(array('-', '+'));
         return $this->cleanUpAndReturnValue();
@@ -54,7 +54,7 @@ class Calculator implements CalculatorInterface
      * @param $item
      * @param $key
      * @return boolean If true, it means that expression was processed and string should be processed from the beginning again
-     * @throws DividedByZeroException
+     * @throws ExceptionDividedByZero
      */
     private function processSplit($item, $key)
     {
@@ -87,7 +87,7 @@ class Calculator implements CalculatorInterface
         return ($key > 0) &&           // not supporting operands in the beginning of the string
         ($key % 2 == 1) &&      // if supporting odd operands. expression is assumed to be a+b...
         ($key < count($this->arrExpression) - 1) &&    // not supporting operands in the end of the string
-        CalculatorHelpers::isOperand($this->arrExpression[$key]);   // supporting only operands
+        Helpers::isOperand($this->arrExpression[$key]);   // supporting only operands
     }
 
     /**
