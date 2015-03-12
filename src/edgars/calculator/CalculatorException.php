@@ -2,9 +2,9 @@
 namespace Edgars\Calculator;
 
 /**
- * Class DividedByZeroException
+ * Class CalculatorException
  * @package Edgars\Calculator
  */
-class DividedByZeroException extends \Exception
+class CalculatorException extends \Exception
 {
 }

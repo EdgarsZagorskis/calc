@@ -9,32 +9,71 @@ namespace Edgars\Calculator;
 class Calculator implements CalculatorInterface
 {
 
-private $arrExpression = array();
+    /**
+     * @var array
+     */
+    private $arrExpression = array();
 
+    /**
+     * @param $expression
+     * @return float
+     */
     public function run($expression)
     {
         $expression = CalculatorHelpers::cleanUp($expression);
-        $this->arrExpression = CalculatorHelpers::split($expression);
+        $this->setArrExpression(CalculatorHelpers::split($expression));
         return $this->processSplits();
     }
 
-    public function processSplits()
+    /**
+     * @param array $arrExpression
+     */
+    public function setArrExpression(array $arrExpression)
     {
-
-        $value = 0;
-        foreach ($this->arrExpression as $key=>$split){
-//            if (C)
-        }
-        array_walk($this->arrExpression, 'self::processSplit');
-
-
-        return $value;
-
+        $this->arrExpression = $arrExpression;
     }
 
-    private static function processSplit($item, $key)
+
+    /**
+     *
+     */
+    public function processSplits()
     {
-               return 0;
+        $value = 0.0;
+        foreach ($this->arrExpression as $key => $item) {
+            $value += $this->processSplit($item, $key);
+        }
+        return $value;
+    }
+
+    /**
+     * @param $item
+     * @param $key
+     * @return int
+     * @throws DividedByZeroException
+     */
+    private function processSplit($item, $key)
+    {
+        $value = 0;
+        $k = ($key % 2 );
+        // Even key (larger than zero)
+        if (($key > 0) && ($key % 2 == 1) && ($key<count($this->arrExpression)-1) &&  CalculatorHelpers::isOperand($item)) {
+            switch ($item) {
+                case '+':
+                    $value += Math::add($this->arrExpression[($key - 1)], $this->arrExpression[($key + 1)]);
+                    break;
+                case '-':
+                    $value += Math::subtract($this->arrExpression[($key - 1)], $this->arrExpression[($key + 1)]);
+                    break;
+                case '/':
+                    $value += Math::divide($this->arrExpression[($key - 1)], $this->arrExpression[($key + 1)]);
+                    break;
+                case '*':
+                    $value += Math::multiply($this->arrExpression[($key - 1)], $this->arrExpression[($key + 1)]);
+                    break;
+            }
+        }
+        return $value;
     }
 
 
