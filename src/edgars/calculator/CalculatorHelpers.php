@@ -29,7 +29,7 @@ class CalculatorHelpers
      */
     public static function split($expression)
     {
-        $splits = preg_split('//', $expression, null, PREG_SPLIT_NO_EMPTY);
+        $splits = preg_split('/([\-\+\*\/])/', $expression, null, PREG_SPLIT_NO_EMPTY|PREG_SPLIT_DELIM_CAPTURE);
         self::checkSplitHealth($splits);
         return $splits;
     }

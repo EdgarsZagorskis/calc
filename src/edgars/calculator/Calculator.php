@@ -13,6 +13,8 @@ class Calculator implements CalculatorInterface
      * @var array
      */
     private $arrExpression = array();
+    private $value = 0.0;
+    private $maxLoops = 10;
 
     /**
      * @param $expression
@@ -22,58 +24,78 @@ class Calculator implements CalculatorInterface
     {
         $expression = CalculatorHelpers::cleanUp($expression);
         $this->setArrExpression(CalculatorHelpers::split($expression));
-        return $this->processSplits();
+        $this->processSplits(array('*', '/'));
+        $this->processSplits(array('-', '+'));
+        return $this->cleanUpAndReturnValue();
     }
 
     /**
-     * @param array $arrExpression
+     * @return float
      */
-    public function setArrExpression(array $arrExpression)
+    public function cleanUpAndReturnValue()
     {
-        $this->arrExpression = $arrExpression;
-    }
-
-
-    /**
-     *
-     */
-    public function processSplits()
-    {
-        $value = 0.0;
-        foreach ($this->arrExpression as $key => $item) {
-            $value += $this->processSplit($item, $key);
-        }
+        $value = $this->arrExpression[0];
+        $this->arrExpression = array();
         return $value;
+    }
+
+    public function processSplits(array $processableOperands)
+    {
+        foreach ($this->arrExpression as $key => $item) {
+            if (in_array($item, $processableOperands) && $this->processSplit($item, $key)) {
+                $this->processSplits($processableOperands);
+                break;
+            }
+        }
+//        // aaaaaaannnnndddd... go again...
+//        if ($this->maxLoops-- > 0 && count($this->arrExpression) >= 3) {
+//            $this->processSplits($processableOperands);
+//        }
     }
 
     /**
      * @param $item
      * @param $key
-     * @return int
+     * @return boolean If true, it means that expression was processed and string should be processed from the beginning again
      * @throws DividedByZeroException
      */
     private function processSplit($item, $key)
     {
-        $value = 0;
-        $k = ($key % 2 );
-        // Even key (larger than zero)
-        if (($key > 0) && ($key % 2 == 1) && ($key<count($this->arrExpression)-1) &&  CalculatorHelpers::isOperand($item)) {
+        $foundValue = false;
+        if (
+            ($key > 0) &&           // not supporting operands in the beginning of the string
+            ($key % 2 == 1) &&      // if supporting odd operands. expression is assumed to be a+b...
+            ($key < count($this->arrExpression) - 1) &&    // not supporting operands in the end of the string
+            CalculatorHelpers::isOperand($item)   // supporting only operands
+        ) {
             switch ($item) {
-                case '+':
-                    $value += Math::add($this->arrExpression[($key - 1)], $this->arrExpression[($key + 1)]);
+                case '+' :
+                    $value = Math::add($this->arrExpression[($key - 1)], $this->arrExpression[($key + 1)]);
                     break;
                 case '-':
-                    $value += Math::subtract($this->arrExpression[($key - 1)], $this->arrExpression[($key + 1)]);
+                    $value = Math::subtract($this->arrExpression[($key - 1)], $this->arrExpression[($key + 1)]);
                     break;
                 case '/':
-                    $value += Math::divide($this->arrExpression[($key - 1)], $this->arrExpression[($key + 1)]);
+                    $value = Math::divide($this->arrExpression[($key - 1)], $this->arrExpression[($key + 1)]);
                     break;
                 case '*':
-                    $value += Math::multiply($this->arrExpression[($key - 1)], $this->arrExpression[($key + 1)]);
+                    $value = Math::multiply($this->arrExpression[($key - 1)], $this->arrExpression[($key + 1)]);
                     break;
             }
+            if (isset($value)) {
+                array_splice($this->arrExpression, $key - 1, 3, $value);
+                $foundValue = true;
+            }
         }
-        return $value;
+        return $foundValue;
+    }
+
+    /**
+     * @param array $arrExpression
+     */
+    private function setArrExpression(array $arrExpression)
+    {
+        $this->arrExpression = $arrExpression;
     }
 
 
