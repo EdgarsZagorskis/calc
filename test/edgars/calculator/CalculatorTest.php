@@ -47,6 +47,7 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(5, $calculator->run('1 + 1 * 3 +1'));
         $this->assertEquals(11, $calculator->run('1 + 3 * 3 +1'));
         $this->assertEquals(4, $calculator->run('2 *10 /5'));
+        $this->assertEquals(2.5, $calculator->run('.5 + 4 *16 /32'));
     }
 
 }

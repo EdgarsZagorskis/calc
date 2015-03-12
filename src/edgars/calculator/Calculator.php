@@ -13,14 +13,6 @@ class Calculator implements CalculatorInterface
      * @var array
      */
     private $arrExpression = array();
-    /**
-     * @var float
-     */
-    private $value = 0.0;
-    /**
-     * @var int
-     */
-    private $maxLoops = 10;
 
     /**
      * @param $expression
@@ -56,10 +48,6 @@ class Calculator implements CalculatorInterface
                 break;
             }
         }
-//        // aaaaaaannnnndddd... go again...
-//        if ($this->maxLoops-- > 0 && count($this->arrExpression) >= 3) {
-//            $this->processSplits($processableOperands);
-//        }
     }
 
     /**
@@ -71,12 +59,7 @@ class Calculator implements CalculatorInterface
     private function processSplit($item, $key)
     {
         $foundValue = false;
-        if (
-            ($key > 0) &&           // not supporting operands in the beginning of the string
-            ($key % 2 == 1) &&      // if supporting odd operands. expression is assumed to be a+b...
-            ($key < count($this->arrExpression) - 1) &&    // not supporting operands in the end of the string
-            CalculatorHelpers::isOperand($item)   // supporting only operands
-        ) {
+        if ($this->isAValidKeyForProcessing($key)) {
             switch ($item) {
                 case '+' :
                     $value = Math::add($this->arrExpression[($key - 1)], $this->arrExpression[($key + 1)]);
@@ -97,6 +80,14 @@ class Calculator implements CalculatorInterface
             }
         }
         return $foundValue;
+    }
+
+    private function isAValidKeyForProcessing($key)
+    {
+        return ($key > 0) &&           // not supporting operands in the beginning of the string
+        ($key % 2 == 1) &&      // if supporting odd operands. expression is assumed to be a+b...
+        ($key < count($this->arrExpression) - 1) &&    // not supporting operands in the end of the string
+        CalculatorHelpers::isOperand($this->arrExpression[$key]);   // supporting only operands
     }
 
     /**

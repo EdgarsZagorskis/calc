@@ -19,7 +19,7 @@ class CalculatorHelpers
      */
     public static function cleanUp($expression)
     {
-        return preg_replace('/[^\d\-\+\*\/]/', '', $expression);
+        return preg_replace('/[^\d\.\-\+\*\/]/', '', $expression);
     }
 
     /**

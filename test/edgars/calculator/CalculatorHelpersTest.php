@@ -13,7 +13,7 @@ class CalculatorHelpersTest extends PHPUnit_Framework_TestCase
      */
     public function test_cleanUp_expression()
     {
-        $this->assertEquals('1+3*3+1', CalculatorHelpers::cleanUp('1 + 3 * 3 + 1'));
+        $this->assertEquals('1.3+3*3+1', CalculatorHelpers::cleanUp('1.3 + 3 * 3 + 1'));
         $this->assertEquals('1+3*3+1', CalculatorHelpers::cleanUp('a1 +   3 * ) (!@&$^!£$": 3 +1                             '));
     }
 
@@ -23,10 +23,10 @@ class CalculatorHelpersTest extends PHPUnit_Framework_TestCase
     public function test_split_expression()
     {
         //TODO Add check for checkSplitHealth
-        $expression = '1+3*3+1';
+        $expression = '1.5+3*3+1';
         $splits = CalculatorHelpers::split($expression);
         $this->assertEquals(7, count($splits));
-        $this->assertEquals(1, $splits[0]);
+        $this->assertEquals(1.5, $splits[0]);
         $this->assertEquals('+', $splits[1]);
         $this->assertEquals(3, $splits[2]);
         $this->assertEquals('*', $splits[3]);
