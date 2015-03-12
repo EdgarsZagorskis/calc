@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php" colors="true">
+    <testsuites>
+        <testsuite name="Calculator Test Suite">
+            <directory>./test/edgars/calculator</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

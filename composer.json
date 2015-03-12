@@ -1,14 +1,19 @@
 {
-    "name": "edgars/calc",
-    "description": "PHPUnit + composer",
-    "require-dev": {
-        "phpunit/phpunit": "~4.5"
-    },
-    "authors": [
-        {
-            "name": "Edgars Zagorskis",
-            "email": "edgars@zagorskis.com"
-        }
-    ],
-    "require": {}
+  "name": "edgars/calc",
+  "description": "PHPUnit + composer",
+  "require-dev": {
+    "phpunit/phpunit": "~4.5"
+  },
+  "autoload": {
+    "classmap": [
+      "src/edgars"
+    ]
+  },
+  "authors": [
+    {
+      "name": "Edgars Zagorskis",
+      "email": "edgars@zagorskis.com"
+    }
+  ],
+  "require": {}
 }

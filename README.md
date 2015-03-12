@@ -1,5 +1,6 @@
-# calc
 PHP Calculator with PHPUnit. no gui
+===================================
 
+To see tests pass, run:
+> ./vendor/bin/phpunit -c phpunit.xml
 
-3.2.1. go
