@@ -17,6 +17,9 @@ class CalculatorHelpersTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('1+3*3+1', CalculatorHelpers::cleanUp('a1 +   3 * ) (!@&$^!£$": 3 +1                             '));
     }
 
+    /**
+     *
+     */
     public function test_split_expression()
     {
         //TODO Add check for checkSplitHealth
@@ -33,6 +36,9 @@ class CalculatorHelpersTest extends PHPUnit_Framework_TestCase
     }
 
 
+    /**
+     *
+     */
     public function test_isNumber()
     {
         $this->assertTrue(CalculatorHelpers::isNumber(1));
@@ -42,6 +48,9 @@ class CalculatorHelpersTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(CalculatorHelpers::isNumber(null));
     }
 
+    /**
+     *
+     */
     public function test_isOperand()
     {
         $this->assertTrue(CalculatorHelpers::isOperand('*'));

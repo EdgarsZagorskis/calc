@@ -26,6 +26,9 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(method_exists($calculator, 'run'));
     }
 
+    /**
+     *
+     */
     public function test_process_simple_expressions()
     {
         $calculator = new Calculator();
@@ -35,6 +38,9 @@ class CalculatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, $calculator->run('3-3'));
     }
 
+    /**
+     *
+     */
     public function test_process_witty_expressions()
     {
         $calculator = new Calculator();

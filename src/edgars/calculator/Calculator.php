@@ -13,7 +13,13 @@ class Calculator implements CalculatorInterface
      * @var array
      */
     private $arrExpression = array();
+    /**
+     * @var float
+     */
     private $value = 0.0;
+    /**
+     * @var int
+     */
     private $maxLoops = 10;
 
     /**
@@ -39,6 +45,9 @@ class Calculator implements CalculatorInterface
         return $value;
     }
 
+    /**
+     * @param array $processableOperands
+     */
     public function processSplits(array $processableOperands)
     {
         foreach ($this->arrExpression as $key => $item) {
