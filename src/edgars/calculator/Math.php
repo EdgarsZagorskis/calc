@@ -43,13 +43,13 @@ class Math implements MathInterface
      * @param $val1
      * @param $val2
      * @return float
-     * @throws DividedByZeroException
+     * @throws ExceptionDividedByZero
      */
     public static function divide($val1, $val2)
     {
         $isVal2Zero = floatval($val2) === 0.0;
         if ($isVal2Zero) {
-            throw new DividedByZeroException();
+            throw new ExceptionDividedByZero();
         } else {
             $returnValue = floatval($val1) / floatval($val2);
         }

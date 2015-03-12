@@ -91,7 +91,7 @@ class MathTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws \Edgars\Calculator\DividedByZeroException
+     * @throws \Edgars\Calculator\ExceptionDividedByZero
      */
     public function test_can_divide_values()
     {
@@ -101,7 +101,7 @@ class MathTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Edgars\Calculator\DividedByZeroException
+     * @expectedException Edgars\Calculator\ExceptionDividedByZero
      */
     public function test_throws_exception_on_divided_by_zero()
     {

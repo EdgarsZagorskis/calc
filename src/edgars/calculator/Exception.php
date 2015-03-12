@@ -2,9 +2,9 @@
 namespace Edgars\Calculator;
 
 /**
- * Class CalculatorException
+ * Class Exception
  * @package Edgars\Calculator
  */
-class CalculatorException extends \Exception
+class Exception extends \Exception
 {
 }
